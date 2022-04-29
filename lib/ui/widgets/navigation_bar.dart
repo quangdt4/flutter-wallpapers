@@ -36,21 +36,22 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
 
   @override
   Widget build(BuildContext context) => AnimatedContainer(
-      duration: widget.duration,
-      height: isVisible ? kBottomNavigationBarHeight : 0,
-      child: Stack(
-        children: [
-          ClipRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
-              child: Container(),
+        duration: widget.duration,
+        height: isVisible ? kBottomNavigationBarHeight : 0,
+        child: Stack(
+          children: [
+            ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 2.5, sigmaY: 2.5),
+                child: Container(),
+              ),
             ),
-          ),
-          Wrap(
-            children: [widget.child],
-          ),
-        ],
-      ));
+            Wrap(
+              children: [widget.child],
+            ),
+          ],
+        ),
+      );
 
   void listen() {
     final direction = widget.controller.position.userScrollDirection;
@@ -71,15 +72,6 @@ class _ScrollToHideWidgetState extends State<ScrollToHideWidget> {
 }
 
 int _selectedIndex = 0;
-
-// BackdropFilter(
-// filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-// child: Container(
-// height: 100,
-// width: 100,
-// decoration: BoxDecoration(color: Colors.black.withOpacity(1.0)),
-// ),
-// ),
 
 Widget homeNavBar(ScrollController scrollController) {
   return ScrollToHideWidget(
