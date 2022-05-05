@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_wallpapers/ui/home/widgets/home_content.dart';
 import 'package:flutter_wallpapers/ui/widgets/navigation_bar.dart';
+
+import 'widget/home_feed.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _HomeState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: homeAppBar(),
-        body: contentHome(context, scrollController),
+        body: homeFeed(context, scrollController),
         bottomNavigationBar: homeNavBar(scrollController),
         extendBody: true);
   }

@@ -1,4 +1,10 @@
-class Images {}
+class Photo {
+  const Photo({
+    required this.url,
+  });
+
+  final String url;
+}
 
 List<String> images = [
   'https://images.unsplash.com/photo-1633177317976-3f9bc45e1d1d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',

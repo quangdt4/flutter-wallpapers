@@ -1,13 +1,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
+import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiBlocProvider(
+      providers: [BlocProvider<PhotoBloc>(create: (context) => PhotoBloc())],
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

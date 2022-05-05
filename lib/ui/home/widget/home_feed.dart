@@ -1,11 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import '../../../data/model/Images.dart';
+import '../../../data/model/Photo.dart';
+import '../../../routes/routes.dart';
 
-// int _currentIndex = 0;
-
-Widget contentHome(BuildContext context, ScrollController _scrollController) {
+Widget homeFeed(BuildContext context, ScrollController _scrollController) {
   return Center(
     child: StaggeredGridView.countBuilder(
       crossAxisCount: 4,
@@ -17,7 +16,7 @@ Widget contentHome(BuildContext context, ScrollController _scrollController) {
         return FadeInUp(
           delay: Duration(milliseconds: index * 50),
           duration: Duration(milliseconds: (index * 50) + 800),
-          child: imageItem(context, index),
+          child: photoItem(context, index),
         );
       },
       staggeredTileBuilder: (int index) =>
@@ -26,7 +25,7 @@ Widget contentHome(BuildContext context, ScrollController _scrollController) {
   );
 }
 
-Widget imageItem(BuildContext context, int index) {
+Widget photoItem(BuildContext context, int index) {
   return GestureDetector(
     child: Container(
       color: Colors.black,
@@ -36,9 +35,14 @@ Widget imageItem(BuildContext context, int index) {
       ),
     ),
     onTap: () {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('tap $index')));
+      _onItemPress(images[index]);
     },
     onLongPress: () {},
   );
+}
+
+void _onItemPress(String photos) {
+  // pokemonBloc.add(PokemonSelectChanged(pokemonId: pokemon.number));
+
+  AppNavigator.push(Routes.detail, photos);
 }
