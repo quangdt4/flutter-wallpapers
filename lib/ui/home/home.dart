@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
+import 'package:flutter_wallpapers/states/navigation/nav_state.dart';
+import 'package:flutter_wallpapers/ui/home/widget/collections.dart';
+import 'package:flutter_wallpapers/ui/home/widget/explore.dart';
+import 'package:flutter_wallpapers/ui/home/widget/storage.dart';
 import 'package:flutter_wallpapers/ui/widgets/navigation_bar.dart';
-
+import '../../states/navigation/nav_event.dart';
 import 'widget/home_feed.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,9 +34,30 @@ class _HomeState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: homeAppBar(),
-        body: homeFeed(context, scrollController),
-        bottomNavigationBar: homeNavBar(scrollController),
+        body: Center(
+          child: BlocSelector<NavigationBloc, NavigationState, int>(
+            selector: (state) => state.selectedItem,
+            builder: (_, i) {
+              return _widgetOptions(i);
+            },
+          ),
+        ),
+        bottomNavigationBar: bottomNavBar(),
         extendBody: true);
+  }
+
+  Widget _widgetOptions(int i) {
+    switch (i) {
+      case 1:
+        return explore();
+      case 2:
+        return collections();
+      case 3:
+        return storage();
+      case 0:
+      default:
+        return homeFeed(context, scrollController);
+    }
   }
 
   AppBar homeAppBar() {
@@ -51,5 +78,46 @@ class _HomeState extends State<HomeScreen> {
         ),
       ],
     );
+  }
+
+  Widget bottomNavBar() {
+    return BlocSelector<NavigationBloc, NavigationState, int>(
+      selector: (state) => state.selectedItem,
+      builder: (_, i) {
+        return ScrollToHideWidget(
+          controller: scrollController,
+          child: BottomNavigationBar(
+            currentIndex: i,
+            showSelectedLabels: false,
+            selectedItemColor: Colors.amber[800],
+            unselectedItemColor: Colors.grey,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_filled),
+                label: "Feed",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: "Explore",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.storage),
+                label: "Collection",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bookmark_outline_sharp),
+                label: "Saved",
+              ),
+            ],
+            onTap: _onTabChanged,
+            backgroundColor: Colors.black54,
+          ),
+        );
+      },
+    );
+  }
+
+  void _onTabChanged(int index) {
+    context.read<NavigationBloc>().add(TabChange(selectedTab: index));
   }
 }

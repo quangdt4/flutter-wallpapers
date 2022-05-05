@@ -6,12 +6,19 @@ import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
+import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
 
 void main() {
-  runApp(MultiBlocProvider(
-      providers: [BlocProvider<PhotoBloc>(create: (context) => PhotoBloc())],
-      child: const MyApp()));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
+        BlocProvider<PhotoBloc>(create: (context) => PhotoBloc()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

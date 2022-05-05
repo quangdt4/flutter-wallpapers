@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wallpapers/routes/fade_page_route.dart';
 import 'package:flutter_wallpapers/ui/detail/detail.dart';
 import 'package:flutter_wallpapers/ui/home/home.dart';
-import 'package:flutter_wallpapers/ui/screens/splash.dart';
+import '../ui/splash/splash.dart';
 
 enum Routes { splash, home, collections, explore, detail }
 
 class RoutePaths {
   static const String splash = '/';
   static const String home = '/home';
-  static const String collections = '';
-  static const String explore = '';
+  static const String collections = '/collections';
+  static const String explore = '/explore';
   static const String detail = '/detail';
 
   static const Map<Routes, String> _pathMap = {
@@ -26,7 +26,6 @@ class RoutePaths {
 }
 
 class AppNavigator {
-
   static GlobalKey<NavigatorState> navKey = GlobalKey();
 
   static Route generateRoute(RouteSettings settings) {
@@ -35,6 +34,12 @@ class AppNavigator {
         return FadeRoute(page: const SplashScreen());
 
       case RoutePaths.detail:
+        return FadeRoute(page: const DetailScreen());
+
+      case RoutePaths.explore:
+        return FadeRoute(page: const DetailScreen());
+
+      case RoutePaths.collections:
         return FadeRoute(page: const DetailScreen());
 
       case RoutePaths.home:

@@ -20,6 +20,13 @@ class _DetailState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Detail'),
+      ),
+      body: Center(
+        child: Text('detail image'),
+      ),
+    );
   }
 }
