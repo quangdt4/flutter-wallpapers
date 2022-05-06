@@ -33,16 +33,19 @@ class MyApp extends StatelessWidget {
       color: Colors.white,
       title: 'Flutter Wallpapers',
       theme: ThemeData(
-          fontFamily: AppFonts.manrope,
-          textTheme: theme.textTheme.apply(
-              fontFamily: AppFonts.manrope,
-              displayColor: AppColors.black),
-          scaffoldBackgroundColor: AppColors.lightGrey,
-          primaryColor: Colors.white,
-          canvasColor: Colors.black.withOpacity(0.5),
-          appBarTheme: Theme.of(context)
-              .appBarTheme
-              .copyWith(systemOverlayStyle: SystemUiOverlayStyle.dark),
+        fontFamily: AppFonts.manrope,
+        textTheme: theme.textTheme
+            .apply(fontFamily: AppFonts.manrope, displayColor: AppColors.black),
+        scaffoldBackgroundColor: AppColors.lightGrey,
+        primaryColor: Colors.white,
+        canvasColor: Colors.black.withOpacity(0.5),
+        appBarTheme: Theme.of(context).appBarTheme.copyWith(
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.dark,
+                statusBarBrightness: Brightness.light,
+              ),
+            ),
       ),
       debugShowCheckedModeBanner: false,
       navigatorKey: AppNavigator.navKey,
