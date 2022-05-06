@@ -15,7 +15,7 @@ Widget homeFeed(BuildContext context, ScrollController _scrollController) {
       itemBuilder: (context, index) {
         return FadeInUp(
           delay: Duration(milliseconds: index * 50),
-          duration: Duration(milliseconds: (index * 50) + 800),
+          duration: Duration(milliseconds: (index * 50) + 500),
           child: photoItem(context, index),
         );
       },

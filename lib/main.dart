@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
@@ -34,10 +35,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           fontFamily: AppFonts.manrope,
           textTheme: theme.textTheme.apply(
-              fontFamily: AppFonts.manrope, displayColor: AppColors.black),
+              fontFamily: AppFonts.manrope,
+              displayColor: AppColors.black),
           scaffoldBackgroundColor: AppColors.lightGrey,
           primaryColor: Colors.white,
-          canvasColor: Colors.black.withOpacity(0.5)),
+          canvasColor: Colors.black.withOpacity(0.5),
+          appBarTheme: Theme.of(context)
+              .appBarTheme
+              .copyWith(systemOverlayStyle: SystemUiOverlayStyle.dark),
+      ),
       debugShowCheckedModeBanner: false,
       navigatorKey: AppNavigator.navKey,
       onGenerateRoute: AppNavigator.generateRoute,

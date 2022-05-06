@@ -15,7 +15,7 @@ class AppColors {
   static const Color lightCyan = Color(0xFF98D8D8);
   static const Color lightGreen = Color(0xFF78C850);
   static const Color lighterGrey = Color(0xFFF4F5F4);
-  static const Color lightGrey = Color(0xFFF5F5F5);
+  static const Color lightGrey = Color(0xFFE8E8E8);
   static const Color lightPink = Color(0xFFEE99AC);
   static const Color lightPurple = Color(0xFF9F5BBA);
   static const Color lightRed = Color(0xFFFB6C6C);
@@ -29,4 +29,6 @@ class AppColors {
   static const Color yellow = Color(0xFFF6C747);
   static const Color semiGrey = Color(0xFFbababa);
   static const Color violet = Color(0xD07038F8);
+  static const Color black95 = Color(0xF2000000);
+
 }
