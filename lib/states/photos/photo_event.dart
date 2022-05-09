@@ -1,3 +1,7 @@
-abstract class PhotoEvent {}
+abstract class PhotoEvent {
+  const PhotoEvent();
+}
 
-class SamplePhotoEvent extends PhotoEvent {}
+class GetData extends PhotoEvent {}
+
+class LoadMore extends PhotoEvent {}

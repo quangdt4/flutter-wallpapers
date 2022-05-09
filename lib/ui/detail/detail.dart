@@ -52,23 +52,23 @@ class _DetailState extends State<DetailScreen> {
                     ),
                   ]),
                 ),
-                SliverPadding(
-                    padding: const EdgeInsets.all(10),
-                    sliver: SliverStaggeredGrid.countBuilder(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        staggeredTileBuilder: (int index) =>
-                            StaggeredTile.count(2, index.isEven ? 4 : 2),
-                        itemBuilder: (context, index) {
-                          return FadeInUp(
-                            delay: Duration(milliseconds: index * 50),
-                            duration:
-                                Duration(milliseconds: (index * 50) + 800),
-                            child: photoItem(context, index),
-                          );
-                        },
-                        itemCount: 8))
+                // SliverPadding(
+                //     padding: const EdgeInsets.all(10),
+                //     sliver: SliverStaggeredGrid.countBuilder(
+                //         crossAxisCount: 4,
+                //         mainAxisSpacing: 10,
+                //         crossAxisSpacing: 10,
+                //         staggeredTileBuilder: (int index) =>
+                //             StaggeredTile.count(2, index.isEven ? 4 : 2),
+                //         itemBuilder: (context, index) {
+                //           return FadeInUp(
+                //             delay: Duration(milliseconds: index * 50),
+                //             duration:
+                //                 Duration(milliseconds: (index * 50) + 800),
+                //             child: photoItem(context, "photo"),
+                //           );
+                //         },
+                //         itemCount: 8))
               ],
             ),
           ),

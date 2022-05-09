@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_wallpapers/data/network/response/photo_res.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_state.dart';
+import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
+import 'package:flutter_wallpapers/states/photos/photo_event.dart';
+import 'package:flutter_wallpapers/states/photos/photo_state.dart';
 import 'package:flutter_wallpapers/ui/home/widget/collections.dart';
 import 'package:flutter_wallpapers/ui/home/widget/explore.dart';
 import 'package:flutter_wallpapers/ui/home/widget/storage.dart';
@@ -22,6 +25,7 @@ class _HomeState extends State<HomeScreen> {
 
   @override
   void initState() {
+    context.read<PhotoBloc>().add(GetData());
     super.initState();
   }
 
@@ -57,7 +61,12 @@ class _HomeState extends State<HomeScreen> {
         return storage();
       case 0:
       default:
-        return homeFeed(context, scrollController);
+        return BlocSelector<PhotoBloc, PhotoState, List<Photo>>(
+          selector: (state) => state.listPhoto,
+          builder: (_, listPhoto) {
+            return homeFeed(context, scrollController, listPhoto);
+          },
+        );
     }
   }
 
@@ -122,3 +131,9 @@ class _HomeState extends State<HomeScreen> {
     context.read<NavigationBloc>().add(TabChange(selectedTab: index));
   }
 }
+
+// Future _onRefresh() async {
+//   pokemonBloc.add(PokemonLoadStarted());
+//
+//   return pokemonBloc.stream.firstWhere((e) => e.status != PokemonStateStatus.loading);
+// }

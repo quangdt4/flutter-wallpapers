@@ -1,4 +1,4 @@
-import '../../data/model/Photo.dart';
+import '../../data/network/response/photo_res.dart';
 
 enum PhotoStateStatus {
   initial,
