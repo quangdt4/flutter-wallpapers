@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../data/network/response/photo_res.dart';
 import '../../../routes/routes.dart';
 import '../../../states/photos/photo_bloc.dart';
+import '../../../states/photos/photo_event.dart';
 import '../../../states/photos/photo_state.dart';
 
 class HomeFeed extends StatefulWidget {
@@ -17,8 +18,11 @@ class HomeFeed extends StatefulWidget {
 }
 
 class _HomeFeedState extends State<HomeFeed> {
+  PhotoBloc get photoBloc => context.read<PhotoBloc>();
+
   @override
   void initState() {
+    photoBloc.add(GetData());
     super.initState();
   }
 

@@ -4,6 +4,15 @@ import 'package:flutter_wallpapers/data/network/response/user_res.dart';
 
 import 'links_res.dart';
 
+class PhotoListResponse {
+  final List<Photo> results;
+
+  PhotoListResponse(this.results);
+
+  PhotoListResponse.fromJsonArray(List json)
+      : results = json.map((i) => Photo.fromJson(i)).toList();
+}
+
 class Photo {
   String? id;
   String? createdAt;

@@ -11,28 +11,14 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   PhotoBloc(this._photoRepository) : super(const PhotoState.initial()) {
     on<PhotoEvent>((event, emit) async {
       if (event is GetData) {
-        _getData(event, emit);
-      } else if (event is LoadMore) {
-        _onLoadMore(event, emit);
-      }
+        try {
+          final newState = state.copyWith(
+              listPhoto: await _photoRepository.getPhotos(0, photosPerPage));
+          emit(newState);
+        } on Exception catch (e) {
+          print(e);
+        }
+      } else if (event is LoadMore) {}
     });
-  }
-
-  void _getData(GetData event, Emitter<PhotoState> emit) async {
-    try {
-      final data = await _photoRepository.getPhotos(0, photosPerPage);
-      final newState = state.copyWith(listPhoto: data);
-      emit(newState);
-    } catch (error, stacktrace) {
-      print(error);
-      print(stacktrace);
-    }
-  }
-
-  void _onLoadMore(LoadMore event, Emitter<PhotoState> emit) {
-    // final currentState = state;
-    // int currentPage = currentState.page;
-    // final photos = await _photoRepository.getPhotos(currentPage++);
-    // print("current_page = $currentPage");
   }
 }
