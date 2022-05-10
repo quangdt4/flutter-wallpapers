@@ -4,13 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wallpapers/data/network/source/photo_data_source.dart';
 import 'package:flutter_wallpapers/data/repository/photo_repo.dart';
+import 'package:flutter_wallpapers/di/network_module.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
-import 'package:injectable/injectable.dart';
 
 import 'di/di.dart';
 
@@ -22,6 +22,13 @@ Future<void> main() async {
   runApp(
     MultiRepositoryProvider(
       providers: [
+        /// services
+        // RepositoryProvider<NetworkModule>(create: (context) => NetworkModule()),
+        /// data sources
+        // RepositoryProvider<PhotoDataSource>(
+        //     create: (context) => PhotoDataSource()),
+
+        /// repositories
         RepositoryProvider<PhotoRepository>(
             create: (context) => PhotoDefaultRepository(
                 photoDataSource: context.read<PhotoDataSource>()))
