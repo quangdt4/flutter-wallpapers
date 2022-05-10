@@ -25,7 +25,6 @@ class _HomeState extends State<HomeScreen> {
 
   @override
   void initState() {
-    context.read<PhotoBloc>().add(GetData());
     super.initState();
   }
 
@@ -61,12 +60,7 @@ class _HomeState extends State<HomeScreen> {
         return storage();
       case 0:
       default:
-        return BlocSelector<PhotoBloc, PhotoState, List<Photo>>(
-          selector: (state) => state.listPhoto,
-          builder: (_, listPhoto) {
-            return homeFeed(context, scrollController, listPhoto);
-          },
-        );
+        return homeFeed(context, scrollController);
     }
   }
 

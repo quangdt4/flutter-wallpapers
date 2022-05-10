@@ -5,20 +5,19 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../data/network/response/photo_res.dart';
 import '../../../routes/routes.dart';
 
-Widget homeFeed(BuildContext context, ScrollController _scrollController,
-    List<Photo> listPhoto) {
+Widget homeFeed(BuildContext context, ScrollController _scrollController) {
   return Center(
     child: StaggeredGridView.countBuilder(
       crossAxisCount: 4,
       mainAxisSpacing: 1.5,
       crossAxisSpacing: 1.5,
       controller: _scrollController,
-      itemCount: listPhoto.length,
+      itemCount: images.length,
       itemBuilder: (context, index) {
         return FadeInUp(
           delay: Duration(milliseconds: index * 50),
           duration: Duration(milliseconds: (index * 50) + 500),
-          child: photoItem(context, listPhoto[index]),
+          child: photoItem(context, index),
         );
       },
       staggeredTileBuilder: (int index) =>
@@ -27,23 +26,23 @@ Widget homeFeed(BuildContext context, ScrollController _scrollController,
   );
 }
 
-Widget photoItem(BuildContext context, Photo photo) {
+Widget photoItem(BuildContext context, int index) {
   return GestureDetector(
     child: Container(
       color: Colors.black,
       child: Image.network(
-        photo.urls?.thumb ?? "",
+        images[index],
         fit: BoxFit.cover,
       ),
     ),
     onTap: () {
-      _onItemPress(photo);
+      _onItemPress(index);
     },
     onLongPress: () {},
   );
 }
 
-void _onItemPress(Photo photo) {
+void _onItemPress(int photo) {
   // pokemonBloc.add(PokemonSelectChanged(pokemonId: pokemon.number));
 
   AppNavigator.push(Routes.detail, photo);

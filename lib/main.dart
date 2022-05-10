@@ -2,38 +2,25 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_wallpapers/data/network/source/photo_data_source.dart';
-import 'package:flutter_wallpapers/data/repository/photo_repo.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
-import 'package:injectable/injectable.dart';
-
-import 'di/di.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await configureDependenciesInjection();
-
   runApp(
-    MultiRepositoryProvider(
+    MultiBlocProvider(
       providers: [
-        RepositoryProvider<PhotoRepository>(
-            create: (context) => PhotoDefaultRepository(
-                photoDataSource: context.read<PhotoDataSource>()))
+        BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
+        BlocProvider<PhotoBloc>(
+          create: (context) => PhotoBloc(),
+        )
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
-          BlocProvider<PhotoBloc>(
-              create: (context) => PhotoBloc(context.read<PhotoRepository>())),
-        ],
-        child: const MyApp(),
-      ),
+      child: const MyApp(),
     ),
   );
 }
