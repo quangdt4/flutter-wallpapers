@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_wallpapers/data/network/response/photo_res.dart';
+import 'package:flutter_wallpapers/data/network/repository/photo_repo.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_state.dart';
-import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
-import 'package:flutter_wallpapers/states/photos/photo_event.dart';
-import 'package:flutter_wallpapers/states/photos/photo_state.dart';
 import 'package:flutter_wallpapers/ui/home/widget/collections.dart';
 import 'package:flutter_wallpapers/ui/home/widget/explore.dart';
 import 'package:flutter_wallpapers/ui/home/widget/storage.dart';
@@ -41,8 +38,8 @@ class _HomeState extends State<HomeScreen> {
         body: Center(
           child: BlocSelector<NavigationBloc, NavigationState, int>(
             selector: (state) => state.selectedItem,
-            builder: (_, i) {
-              return _widgetOptions(i);
+            builder: (_, tabIndex) {
+              return _widgetOptions(tabIndex);
             },
           ),
         ),
@@ -50,7 +47,7 @@ class _HomeState extends State<HomeScreen> {
         extendBody: true);
   }
 
-  Widget _widgetOptions(int i) {
+  _widgetOptions(int i) {
     switch (i) {
       case 1:
         return explore();
@@ -60,7 +57,9 @@ class _HomeState extends State<HomeScreen> {
         return storage();
       case 0:
       default:
-        return homeFeed(context, scrollController);
+        return HomeFeed(
+          scrollController: scrollController,
+        );
     }
   }
 

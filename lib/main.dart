@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_wallpapers/data/network/repository/photo_repo.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
@@ -17,7 +18,8 @@ Future<void> main() async {
       providers: [
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         BlocProvider<PhotoBloc>(
-          create: (context) => PhotoBloc(),
+          // create: (context) => PhotoBloc(context.read<PhotoRepository>()),
+          create: (context) => PhotoBloc(PhotoDefaultRepository()),
         )
       ],
       child: const MyApp(),
