@@ -3,20 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_state.dart';
 import 'package:flutter_wallpapers/ui/home/widget/collections.dart';
-import 'package:flutter_wallpapers/ui/home/widget/explore.dart';
+import 'package:flutter_wallpapers/ui/home/widget/home_explore.dart';
 import 'package:flutter_wallpapers/ui/home/widget/storage.dart';
 import 'package:flutter_wallpapers/ui/widgets/navigation_bar.dart';
 import '../../states/navigation/nav_event.dart';
 import 'widget/home_feed.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HomeState();
 }
 
-class _HomeState extends State<HomeScreen> {
+class _HomeState extends State<HomePage> {
   ScrollController scrollController = ScrollController();
 
   @override
@@ -49,7 +49,7 @@ class _HomeState extends State<HomeScreen> {
   _widgetOptions(int i) {
     switch (i) {
       case 1:
-        return explore();
+        return const HomeExplore();
       case 2:
         return collections();
       case 3:
@@ -123,9 +123,3 @@ class _HomeState extends State<HomeScreen> {
     context.read<NavigationBloc>().add(TabChange(selectedTab: index));
   }
 }
-
-// Future _onRefresh() async {
-//   pokemonBloc.add(PokemonLoadStarted());
-//
-//   return pokemonBloc.stream.firstWhere((e) => e.status != PokemonStateStatus.loading);
-// }

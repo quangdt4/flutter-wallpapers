@@ -8,7 +8,8 @@ import '../../data/network/response/photo_res.dart';
 import '../home/widget/home_feed.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({Key? key, required this.photo, required this.listSuggest}) : super(key: key);
+  const DetailScreen({Key? key, required this.photo, required this.listSuggest})
+      : super(key: key);
 
   final Photo photo;
 
@@ -19,7 +20,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailState extends State<DetailScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -49,7 +49,7 @@ class _DetailState extends State<DetailScreen> {
                     Container(
                       margin: const EdgeInsets.only(left: 10),
                       child: const Text(
-                        "Other photos",
+                        "More photos",
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -60,44 +60,28 @@ class _DetailState extends State<DetailScreen> {
                   ]),
                 ),
                 SliverPadding(
-                    padding: const EdgeInsets.all(10),
-                    sliver: SliverStaggeredGrid.countBuilder(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        staggeredTileBuilder: (int index) =>
-                            StaggeredTile.count(2, index.isEven ? 4 : 2),
-                        itemBuilder: (context, index) {
-                          return FadeInUp(
-                            delay: Duration(milliseconds: index * 50),
-                            duration:
-                                Duration(milliseconds: (index * 50) + 800),
-                            child: photoItem(context, widget.listSuggest[index], widget.listSuggest),
-                          );
-                        },
-                        itemCount: 8),
+                  // MORE PHOTOS LIST
+                  padding: const EdgeInsets.all(10),
+                  sliver: SliverStaggeredGrid.countBuilder(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      staggeredTileBuilder: (int index) =>
+                          StaggeredTile.count(2, index.isEven ? 4 : 2),
+                      itemBuilder: (context, index) {
+                        return FadeInUp(
+                          delay: Duration(milliseconds: index * 50),
+                          duration: Duration(milliseconds: (index * 50) + 800),
+                          child: photoItem(context, widget.listSuggest[index],
+                              widget.listSuggest),
+                        );
+                      },
+                      itemCount: 8),
                 )
               ],
             ),
           ),
-          Positioned(
-            top: 40,
-            left: 8,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                  onPressed: () {
-                    AppNavigator.pop();
-                  },
-                ),
-              ],
-            ),
-          )
+          btBack(),
         ],
       ),
     );
@@ -109,8 +93,8 @@ class _DetailState extends State<DetailScreen> {
       clipBehavior: Clip.none,
       children: [
         Image.network(
-            photo.urls?.regular ?? "",
-            fit: BoxFit.fill,
+          photo.urls?.regular ?? "",
+          fit: BoxFit.fill,
         ),
         Positioned(
           top: 40,
@@ -229,6 +213,27 @@ class _DetailState extends State<DetailScreen> {
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget btBack() {
+    return Positioned(
+      top: 40,
+      left: 8,
+      child: Row(
+        children: [
+          IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+              size: 24,
+            ),
+            onPressed: () {
+              AppNavigator.pop();
+            },
+          ),
         ],
       ),
     );

@@ -3,20 +3,29 @@ import 'package:flutter_wallpapers/data/network/response/user_res.dart';
 import 'cover_photo_res.dart';
 import 'links_res.dart';
 
-class CollectionListItem {
+class CollectionListResponse {
+  final List<Collection> results;
+
+  CollectionListResponse(this.results);
+
+  CollectionListResponse.fromJsonArray(List json)
+      : results = json.map((i) => Collection.fromJson(i)).toList();
+}
+
+class Collection {
   String? title;
   String? description;
   String? publishedAt;
   String? updatedAt;
   String? shareKey;
   bool? private;
-  int? id;
+  String? id;
   int? totalPhotos;
   CoverPhoto? coverPhoto;
   Links? links;
   User? user;
 
-  CollectionListItem(
+  Collection(
       {this.title,
       this.description,
       this.publishedAt,
@@ -29,7 +38,7 @@ class CollectionListItem {
       this.links,
       this.user});
 
-  CollectionListItem.fromJson(Map<String, dynamic> json) {
+  Collection.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     description = json['description'];
     publishedAt = json['published_at'];

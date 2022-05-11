@@ -30,5 +30,6 @@ class AppColors {
   static const Color semiGrey = Color(0xFFbababa);
   static const Color violet = Color(0xD07038F8);
   static const Color black95 = Color(0xF2000000);
+  static const Color black60 = Color(0x99000000);
 
 }

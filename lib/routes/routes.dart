@@ -38,7 +38,7 @@ class AppNavigator {
 
       case RoutePaths.home:
       default:
-        return FadeRoute(page: const HomeScreen());
+        return FadeRoute(page: const HomePage());
     }
   }
 

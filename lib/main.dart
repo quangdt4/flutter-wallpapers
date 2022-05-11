@@ -2,11 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_wallpapers/data/network/repository/photo_repo.dart';
+import 'package:flutter_wallpapers/data/network/repository/common_repo.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
+import 'package:flutter_wallpapers/states/collections/collections_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
 
@@ -18,8 +19,10 @@ Future<void> main() async {
       providers: [
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         BlocProvider<PhotoBloc>(
-          // create: (context) => PhotoBloc(context.read<PhotoRepository>()),
-          create: (context) => PhotoBloc(PhotoDefaultRepository()),
+          create: (context) => PhotoBloc(CommonDefaultRepository()),
+        ),
+        BlocProvider<CollectionsBloc>(
+          create: (context) => CollectionsBloc(CommonDefaultRepository()),
         )
       ],
       child: const MyApp(),
@@ -41,7 +44,7 @@ class MyApp extends StatelessWidget {
         fontFamily: AppFonts.manrope,
         textTheme: theme.textTheme
             .apply(fontFamily: AppFonts.manrope, displayColor: AppColors.black),
-        scaffoldBackgroundColor: AppColors.lightGrey,
+        scaffoldBackgroundColor: Colors.grey.shade100,
         primaryColor: Colors.white,
         canvasColor: Colors.black.withOpacity(0.5),
         appBarTheme: Theme.of(context).appBarTheme.copyWith(

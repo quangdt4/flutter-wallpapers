@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_wallpapers/data/network/repository/photo_repo.dart';
+import 'package:flutter_wallpapers/data/network/repository/common_repo.dart';
 import 'package:flutter_wallpapers/states/photos/photo_event.dart';
 import 'package:flutter_wallpapers/states/photos/photo_state.dart';
 
 class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
   static const int photosPerPage = 20;
 
-  final PhotoRepository _photoRepository;
+  final CommonRepository _photoRepository;
 
   PhotoBloc(this._photoRepository) : super(const PhotoState.initial()) {
     on<PhotoEvent>((event, emit) async {

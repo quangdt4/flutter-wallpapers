@@ -37,37 +37,44 @@ class _HomeFeedState extends State<HomeFeed> {
       child: BlocSelector<PhotoBloc, PhotoState, List<Photo>>(
           selector: (state) => state.listPhoto,
           builder: (_, listPhoto) {
-            return StaggeredGridView.countBuilder(
-              crossAxisCount: 4,
-              mainAxisSpacing: 1.5,
-              crossAxisSpacing: 1.5,
-              controller: widget.scrollController,
-              itemCount: listPhoto.length,
-              itemBuilder: (context, index) {
-                Photo item = listPhoto[index];
-                List<Photo> listPhotoSug = listPhoto;
-                return FadeInUp(
-                  delay: Duration(milliseconds: index * 50),
-                  duration: Duration(milliseconds: (index * 50) + 500),
-                  child: photoItem(context, item, listPhotoSug),
-                );
+            return RefreshIndicator(
+              onRefresh: () async {
+                await Future.delayed(const Duration(seconds: 2));
+                updateData();
               },
-              staggeredTileBuilder: (int index) =>
-                  StaggeredTile.count(2, index.isEven ? 4 : 2),
+              color: Colors.white,
+              backgroundColor: Colors.black26,
+              child: StaggeredGridView.countBuilder(
+                crossAxisCount: 4,
+                mainAxisSpacing: 1.5,
+                crossAxisSpacing: 1.5,
+                controller: widget.scrollController,
+                itemCount: listPhoto.length,
+                itemBuilder: (context, index) {
+                  Photo item = listPhoto[index];
+                  List<Photo> listPhotoSug = listPhoto;
+                  return FadeInUp(
+                    delay: Duration(milliseconds: index * 50),
+                    duration: Duration(milliseconds: (index * 50) + 500),
+                    child: photoItem(context, item, listPhotoSug),
+                  );
+                },
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(2, index.isEven ? 4 : 2),
+              ),
             );
           }),
     );
   }
+
+  void updateData() {}
 }
 
 Widget photoItem(BuildContext context, Photo item, List<Photo> listPhotoSug) {
   return GestureDetector(
-    child: Container(
-      color: Colors.black,
-      child: Image.network(
-        item.urls?.regular ?? "",
-        fit: BoxFit.cover,
-      ),
+    child: Image.network(
+      item.urls?.regular ?? "",
+      fit: BoxFit.cover,
     ),
     onTap: () {
       _onItemPress(context, item, listPhotoSug);
@@ -76,7 +83,11 @@ Widget photoItem(BuildContext context, Photo item, List<Photo> listPhotoSug) {
   );
 }
 
-void _onItemPress(BuildContext context, Photo photo, List<Photo> listPhotoSug) async {
-  await Navigator.push(context,
-      MaterialPageRoute(builder: (context) => DetailScreen(photo: photo, listSuggest: listPhotoSug)));
+void _onItemPress(
+    BuildContext context, Photo photo, List<Photo> listPhotoSug) async {
+  await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              DetailScreen(photo: photo, listSuggest: listPhotoSug)));
 }
