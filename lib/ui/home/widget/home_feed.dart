@@ -2,8 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_wallpapers/ui/detail/detail.dart';
 import '../../../data/network/response/photo_res.dart';
-import '../../../routes/routes.dart';
 import '../../../states/photos/photo_bloc.dart';
 import '../../../states/photos/photo_event.dart';
 import '../../../states/photos/photo_state.dart';
@@ -45,10 +45,11 @@ class _HomeFeedState extends State<HomeFeed> {
               itemCount: listPhoto.length,
               itemBuilder: (context, index) {
                 Photo item = listPhoto[index];
+                List<Photo> listPhotoSug = listPhoto;
                 return FadeInUp(
                   delay: Duration(milliseconds: index * 50),
                   duration: Duration(milliseconds: (index * 50) + 500),
-                  child: photoItem(context, item),
+                  child: photoItem(context, item, listPhotoSug),
                 );
               },
               staggeredTileBuilder: (int index) =>
@@ -59,22 +60,23 @@ class _HomeFeedState extends State<HomeFeed> {
   }
 }
 
-Widget photoItem(BuildContext context, Photo item) {
+Widget photoItem(BuildContext context, Photo item, List<Photo> listPhotoSug) {
   return GestureDetector(
     child: Container(
       color: Colors.black,
       child: Image.network(
-        item.urls?.thumb ?? "",
+        item.urls?.regular ?? "",
         fit: BoxFit.cover,
       ),
     ),
     onTap: () {
-      _onItemPress(item);
+      _onItemPress(context, item, listPhotoSug);
     },
     onLongPress: () {},
   );
 }
 
-void _onItemPress(Photo photo) {
-  AppNavigator.push(Routes.detail, photo);
+void _onItemPress(BuildContext context, Photo photo, List<Photo> listPhotoSug) async {
+  await Navigator.push(context,
+      MaterialPageRoute(builder: (context) => DetailScreen(photo: photo, listSuggest: listPhotoSug)));
 }
