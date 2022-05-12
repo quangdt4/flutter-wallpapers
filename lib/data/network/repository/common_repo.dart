@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
-
 import '../response/collection_item_res.dart';
 import '../response/photo_res.dart';
-
+import '../response/search_photos_res.dart';
 
 abstract class CommonRepository {
   Future<List<Photo>> getPhotos(int page, int perPage);
@@ -10,6 +9,9 @@ abstract class CommonRepository {
   Future<List<Collection>> getCollections(int page, int perPage);
 
   Future<List<Photo>> getCollectionPhotos(String id, int page, int perPage);
+
+  Future<List<Photo>> getPhotosFromSearch(
+      String keyWord, int page, int perPage);
 }
 
 class CommonDefaultRepository implements CommonRepository {
@@ -20,12 +22,10 @@ class CommonDefaultRepository implements CommonRepository {
   @override
   Future<List<Photo>> getPhotos(int page, int perPage) async {
     try {
-      Response response = await Dio()
-          .get("https://api.unsplash.com/photos/?client_id=$apiKey&page=$page&per_page=20");
+      Response response = await Dio().get(
+          "https://api.unsplash.com/photos/?client_id=$apiKey&page=$page&per_page=20");
 
-      List<Photo> list = PhotoListResponse
-          .fromJsonArray(response.data)
-          .results;
+      List<Photo> list = PhotoListResponse.fromJsonArray(response.data).results;
       print(list.length);
       return list;
     } catch (error, stacktrace) {
@@ -53,16 +53,32 @@ class CommonDefaultRepository implements CommonRepository {
   }
 
   @override
-  Future<List<Photo>> getCollectionPhotos(String id, int page, int perPage) async {
+  Future<List<Photo>> getCollectionPhotos(
+      String id, int page, int perPage) async {
     try {
-      Response response = await Dio()
-          .get("https://api.unsplash.com/collections/$id/photos/?client_id=$apiKey&page=$page&per_page=20");
+      Response response = await Dio().get(
+          "https://api.unsplash.com/collections/$id/photos/?client_id=$apiKey&page=$page&per_page=20");
 
-      List<Photo> list = PhotoListResponse
-          .fromJsonArray(response.data)
-          .results;
+      List<Photo> list = PhotoListResponse.fromJsonArray(response.data).results;
       print(list.length);
       return list;
+    } catch (error, stacktrace) {
+      print(error);
+      print(stacktrace);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<Photo>> getPhotosFromSearch(
+      String keyWord, int page, int perPage) async {
+    try {
+      Response response = await Dio().get(
+          "https://api.unsplash.com/search/photos/?client_id=$apiKey&page=$page&query=$keyWord&per_page=20");
+
+      List<Photo>? list = SearchPhotoResponse.fromJson(response.data).results;
+      print(list?.length);
+      return list ?? [];
     } catch (error, stacktrace) {
       print(error);
       print(stacktrace);

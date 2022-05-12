@@ -18,7 +18,19 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
         } on Exception catch (e) {
           print(e);
         }
-      } else if (event is LoadMore) {}
+      } else if (event is GetDataFromSearch) {
+        try {
+          final newState = state.copyWith(
+              listPhoto: await _photoRepository.getPhotosFromSearch(
+                  event.keyWord, 0, photosPerPage));
+          emit(newState);
+        } on Exception catch (e) {
+          print(e);
+        }
+      } else if (event is ResetPhotoData) {
+        final newState = state.copyWith(listPhoto: []);
+        emit(newState);
+      }
     });
   }
 }

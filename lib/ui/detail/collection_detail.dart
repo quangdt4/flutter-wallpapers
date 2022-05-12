@@ -26,6 +26,7 @@ class _DetailCollectionState extends State<DetailCollection> {
 
   @override
   void initState() {
+    collectionBloc.add(ResetData());
     collectionBloc.add(GetCollectionPhotos(widget.collectionItem.id ?? ""));
     super.initState();
   }
