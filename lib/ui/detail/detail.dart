@@ -5,7 +5,7 @@ import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 
 import '../../data/network/response/photo_res.dart';
-import '../home/widget/home_feed.dart';
+import '../home/widget/tab_feed.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key, required this.photo, required this.listSuggest})
@@ -148,7 +148,6 @@ class _DetailState extends State<DetailScreen> {
     }
     return Flexible(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -161,7 +160,7 @@ class _DetailState extends State<DetailScreen> {
               ),
               const SizedBox(width: 12),
               ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 170),
+                constraints: const BoxConstraints(maxWidth: 120),
                 child: Text(
                   "${photo.user?.firstName ?? ""} ${photo.user?.lastName ?? ""}",
                   style: const TextStyle(
@@ -198,19 +197,18 @@ class _DetailState extends State<DetailScreen> {
           ),
           Visibility(
             visible: _isVisibleDescription,
-            child: Column(
-              children: [
-                const SizedBox(height: 10),
-                Text(
-                  photo.altDescription ?? "",
-                  style: const TextStyle(
-                    color: AppColors.lightGrey,
-                    fontSize: 14,
-                  ),
-                  maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
+            child: Container(
+              margin: const EdgeInsets.only(top: 10),
+              alignment: Alignment.topLeft,
+              child: Text(
+                photo.altDescription ?? "",
+                style: const TextStyle(
+                  color: AppColors.lightGrey,
+                  fontSize: 14,
                 ),
-              ],
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           )
         ],

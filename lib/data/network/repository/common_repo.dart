@@ -8,6 +8,8 @@ abstract class CommonRepository {
   Future<List<Photo>> getPhotos(int page, int perPage);
 
   Future<List<Collection>> getCollections(int page, int perPage);
+
+  Future<List<Photo>> getCollectionPhotos(String id, int page, int perPage);
 }
 
 class CommonDefaultRepository implements CommonRepository {
@@ -19,7 +21,7 @@ class CommonDefaultRepository implements CommonRepository {
   Future<List<Photo>> getPhotos(int page, int perPage) async {
     try {
       Response response = await Dio()
-          .get("https://api.unsplash.com/photos/?client_id=$apiKey&page=$page");
+          .get("https://api.unsplash.com/photos/?client_id=$apiKey&page=$page&per_page=20");
 
       List<Photo> list = PhotoListResponse
           .fromJsonArray(response.data)
@@ -37,7 +39,7 @@ class CommonDefaultRepository implements CommonRepository {
   Future<List<Collection>> getCollections(int page, int perPage) async {
     try {
       Response response = await Dio().get(
-          "https://api.unsplash.com/collections/?client_id=$apiKey&page=$page");
+          "https://api.unsplash.com/collections/?client_id=$apiKey&page=$page&per_page=20");
 
       List<Collection> list =
           CollectionListResponse.fromJsonArray(response.data).results;
@@ -45,6 +47,24 @@ class CommonDefaultRepository implements CommonRepository {
       return list;
     } catch (error, stacktrace) {
       print('ERROR: $error');
+      print(stacktrace);
+      return [];
+    }
+  }
+
+  @override
+  Future<List<Photo>> getCollectionPhotos(String id, int page, int perPage) async {
+    try {
+      Response response = await Dio()
+          .get("https://api.unsplash.com/collections/$id/photos/?client_id=$apiKey&page=$page&per_page=20");
+
+      List<Photo> list = PhotoListResponse
+          .fromJsonArray(response.data)
+          .results;
+      print(list.length);
+      return list;
+    } catch (error, stacktrace) {
+      print(error);
       print(stacktrace);
       return [];
     }

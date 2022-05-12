@@ -8,14 +8,16 @@ import 'package:flutter_wallpapers/states/collections/collections_bloc.dart';
 import 'package:flutter_wallpapers/states/collections/collections_event.dart';
 import 'package:flutter_wallpapers/states/collections/collections_state.dart';
 
-class HomeExplore extends StatefulWidget {
-  const HomeExplore({Key? key}) : super(key: key);
+import '../../detail/collection_detail.dart';
+
+class TabExplore extends StatefulWidget {
+  const TabExplore({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomeExploreState();
+  State<StatefulWidget> createState() => _TabExploreState();
 }
 
-class _HomeExploreState extends State<HomeExplore> {
+class _TabExploreState extends State<TabExplore> {
   CollectionsBloc get collectionsBloc => context.read<CollectionsBloc>();
 
   @override
@@ -31,11 +33,12 @@ class _HomeExploreState extends State<HomeExplore> {
         selector: (state) => state.listCollection,
         builder: (_, listCollection) {
           return Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 56),
             child: CustomScrollView(
               slivers: <Widget>[
                 SliverList(
                   delegate: SliverChildListDelegate([
+                    const SizedBox(height: 12),
                     searchBar(screenWidth),
                     const SizedBox(height: 20),
                     const Text(
@@ -43,7 +46,7 @@ class _HomeExploreState extends State<HomeExplore> {
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -107,28 +110,36 @@ class _HomeExploreState extends State<HomeExplore> {
 
   Widget collectionItem(BuildContext context, Collection item) {
     return GestureDetector(
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Image.network(item.coverPhoto?.urls?.regular ?? "",
-              fit: BoxFit.cover),
-          Container(
-            decoration: const BoxDecoration(color: AppColors.black60),
-          ),
-          Center(
-            child: Text(
-              item.title ?? "",
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.network(item.coverPhoto?.urls?.regular ?? "",
+                fit: BoxFit.cover),
+            Container(
+              decoration: const BoxDecoration(color: AppColors.black60),
+            ),
+            Center(
+              child: Text(
+                item.title ?? "",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      onTap: () {},
-    );
+          ],
+        ),
+        onTap: () {
+          _onItemPressed(item);
+        });
+  }
+
+  void _onItemPressed(Collection item) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DetailCollection(collectionItem: item)));
   }
 }

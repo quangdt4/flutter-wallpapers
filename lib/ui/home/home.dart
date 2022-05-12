@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_state.dart';
-import 'package:flutter_wallpapers/ui/home/widget/collections.dart';
-import 'package:flutter_wallpapers/ui/home/widget/home_explore.dart';
-import 'package:flutter_wallpapers/ui/home/widget/storage.dart';
+import 'package:flutter_wallpapers/ui/home/widget/tab_collections.dart';
+import 'package:flutter_wallpapers/ui/home/widget/tab_explore.dart';
+import 'package:flutter_wallpapers/ui/home/widget/tab_storage.dart';
 import 'package:flutter_wallpapers/ui/widgets/navigation_bar.dart';
 import '../../states/navigation/nav_event.dart';
-import 'widget/home_feed.dart';
+import 'widget/tab_feed.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -49,14 +49,14 @@ class _HomeState extends State<HomePage> {
   _widgetOptions(int i) {
     switch (i) {
       case 1:
-        return const HomeExplore();
+        return const TabExplore();
       case 2:
         return collections();
       case 3:
         return storage();
       case 0:
       default:
-        return HomeFeed(
+        return TabFeed(
           scrollController: scrollController,
         );
     }
@@ -91,28 +91,29 @@ class _HomeState extends State<HomePage> {
           child: BottomNavigationBar(
             currentIndex: i,
             showSelectedLabels: false,
-            selectedItemColor: Colors.amber[800],
+            selectedItemColor: Colors.black,
             unselectedItemColor: Colors.grey,
+            backgroundColor: Colors.white,
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled),
-                label: "Feed",
-              ),
+                  icon: Icon(Icons.home_filled, size: 26),
+                  label: "Feed",
+                  backgroundColor: Colors.white),
+              // can change bottom nav with white70
               BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: "Explore",
-              ),
+                  icon: Icon(Icons.search, size: 26),
+                  label: "Explore",
+                  backgroundColor: Colors.white),
               BottomNavigationBarItem(
-                icon: Icon(Icons.storage),
-                label: "Collection",
-              ),
+                  icon: Icon(Icons.storage, size: 26),
+                  label: "Collection",
+                  backgroundColor: Colors.white),
               BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark_outline_sharp),
-                label: "Saved",
-              ),
+                  icon: Icon(Icons.bookmark_outline_sharp, size: 26),
+                  label: "Saved",
+                  backgroundColor: Colors.white),
             ],
             onTap: _onTabChanged,
-            backgroundColor: Colors.black54,
           ),
         );
       },

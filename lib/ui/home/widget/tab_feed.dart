@@ -8,16 +8,16 @@ import '../../../states/photos/photo_bloc.dart';
 import '../../../states/photos/photo_event.dart';
 import '../../../states/photos/photo_state.dart';
 
-class HomeFeed extends StatefulWidget {
-  const HomeFeed({Key? key, required this.scrollController}) : super(key: key);
+class TabFeed extends StatefulWidget {
+  const TabFeed({Key? key, required this.scrollController}) : super(key: key);
 
   final ScrollController scrollController;
 
   @override
-  State<StatefulWidget> createState() => _HomeFeedState();
+  State<StatefulWidget> createState() => _TabFeedState();
 }
 
-class _HomeFeedState extends State<HomeFeed> {
+class _TabFeedState extends State<TabFeed> {
   PhotoBloc get photoBloc => context.read<PhotoBloc>();
 
   @override
