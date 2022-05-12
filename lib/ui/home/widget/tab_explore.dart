@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/data/network/response/collection_item_res.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
+import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/states/collections/collections_bloc.dart';
 import 'package:flutter_wallpapers/states/collections/collections_event.dart';
 import 'package:flutter_wallpapers/states/collections/collections_state.dart';
@@ -29,82 +30,90 @@ class _TabExploreState extends State<TabExplore> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return BlocSelector<CollectionsBloc, CollectionsState, List<Collection>>(
-        selector: (state) => state.listCollection,
-        builder: (_, listCollection) {
-          return Container(
-            padding: const EdgeInsets.only(left: 12, right: 12, bottom: 56),
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    const SizedBox(height: 12),
-                    searchBar(screenWidth),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "Collections",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+    return SafeArea(
+      child: BlocSelector<CollectionsBloc, CollectionsState, List<Collection>>(
+          selector: (state) => state.listCollection,
+          builder: (_, listCollection) {
+            return Container(
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              child: Column(children: [
+                const SizedBox(height: 12),
+                searchBar(screenWidth),
+                const SizedBox(height: 20),
+                const Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Collections",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
                     ),
-                    const SizedBox(height: 20),
-                  ]),
+                  ),
                 ),
-                SliverStaggeredGrid.countBuilder(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  itemCount: listCollection.length,
-                  staggeredTileBuilder: (int index) =>
-                      StaggeredTile.count(2, index.isEven ? 2 : 2),
-                  itemBuilder: (context, index) {
-                    Collection item = listCollection[index];
-                    return FadeInUp(
-                      delay: Duration(milliseconds: index * 50),
-                      duration: Duration(milliseconds: (index * 50) + 800),
-                      child: collectionItem(context, item),
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
-        });
+                const SizedBox(height: 12),
+                listCollectionItem(listCollection)
+              ]),
+            );
+          }),
+    );
   }
 
   Widget searchBar(double screenWidth) {
     return GestureDetector(
       child: Container(
-        width: screenWidth,
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        height: 48,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey.shade300),
-            borderRadius: BorderRadius.circular(12)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: const [
-            Icon(
-              Icons.search_sharp,
-              color: Colors.grey,
-              size: 24,
+          width: screenWidth,
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          height: 40,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey.shade300),
+              borderRadius: BorderRadius.circular(10)),
+          child: Align(
+            alignment: Alignment.center,
+            child: Row(
+              children: const [
+                Icon(
+                  Icons.search_sharp,
+                  color: Colors.grey,
+                  size: 24,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "Search photos, collection,..",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                )
+              ],
             ),
-            SizedBox(width: 10),
-            Text(
-              "Search photos, collection,..",
-              style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
-            )
-          ],
-        ),
+          )),
+      onTap: () {
+        AppNavigator.push(Routes.search);
+      },
+    );
+  }
+
+  Widget listCollectionItem(List<Collection> listCollection) {
+    return Expanded(
+      child: StaggeredGridView.countBuilder(
+        crossAxisCount: 4,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        itemCount: listCollection.length,
+        staggeredTileBuilder: (int index) =>
+            StaggeredTile.count(2, index.isEven ? 2 : 2),
+        itemBuilder: (context, index) {
+          Collection item = listCollection[index];
+          return FadeInUp(
+            delay: Duration(milliseconds: index * 50),
+            duration: Duration(milliseconds: (index * 50) + 800),
+            child: collectionItem(context, item),
+          );
+        },
       ),
-      onTap: () {},
     );
   }
 

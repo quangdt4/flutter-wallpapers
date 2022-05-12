@@ -33,41 +33,62 @@ class _TabFeedState extends State<TabFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: BlocSelector<PhotoBloc, PhotoState, List<Photo>>(
-          selector: (state) => state.listPhoto,
-          builder: (_, listPhoto) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                await Future.delayed(const Duration(seconds: 2));
-                updateData();
-              },
-              color: Colors.white,
-              backgroundColor: Colors.black26,
-              child: StaggeredGridView.countBuilder(
-                crossAxisCount: 4,
-                mainAxisSpacing: 1.5,
-                crossAxisSpacing: 1.5,
-                controller: widget.scrollController,
-                itemCount: listPhoto.length,
-                itemBuilder: (context, index) {
-                  Photo item = listPhoto[index];
-                  List<Photo> listPhotoSug = listPhoto;
-                  return FadeInUp(
-                    delay: Duration(milliseconds: index * 50),
-                    duration: Duration(milliseconds: (index * 50) + 500),
-                    child: photoItem(context, item, listPhotoSug),
-                  );
+    return Scaffold(
+      appBar: homeAppBar(),
+      body: Center(
+        child: BlocSelector<PhotoBloc, PhotoState, List<Photo>>(
+            selector: (state) => state.listPhoto,
+            builder: (_, listPhoto) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  await Future.delayed(const Duration(seconds: 2));
+                  _updateData();
                 },
-                staggeredTileBuilder: (int index) =>
-                    StaggeredTile.count(2, index.isEven ? 4 : 2),
-              ),
-            );
-          }),
+                color: Colors.white,
+                backgroundColor: Colors.black26,
+                child: StaggeredGridView.countBuilder(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 1.5,
+                  crossAxisSpacing: 1.5,
+                  controller: widget.scrollController,
+                  itemCount: listPhoto.length,
+                  itemBuilder: (context, index) {
+                    Photo item = listPhoto[index];
+                    List<Photo> listPhotoSug = listPhoto;
+                    return FadeInUp(
+                      delay: Duration(milliseconds: index * 50),
+                      duration: Duration(milliseconds: (index * 50) + 500),
+                      child: photoItem(context, item, listPhotoSug),
+                    );
+                  },
+                  staggeredTileBuilder: (int index) =>
+                      StaggeredTile.count(2, index.isEven ? 4 : 2),
+                ),
+              );
+            }),
+      ),
     );
   }
 
-  void updateData() {}
+  AppBar homeAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      title: const Text(
+        "INSPIRED",
+        style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            letterSpacing: 1.0),
+      ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.menu, color: Colors.black87),
+          onPressed: () {},
+        ),
+      ],
+    );
+  }
 }
 
 Widget photoItem(BuildContext context, Photo item, List<Photo> listPhotoSug) {
@@ -91,3 +112,5 @@ void _onItemPress(
           builder: (context) =>
               DetailScreen(photo: photo, listSuggest: listPhotoSug)));
 }
+
+void _updateData() {}

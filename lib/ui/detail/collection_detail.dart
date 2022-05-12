@@ -38,8 +38,10 @@ class _DetailCollectionState extends State<DetailCollection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        elevation: 0,
         title: Text(
           widget.collectionItem.title ?? "",
           style: const TextStyle(
@@ -59,33 +61,53 @@ class _DetailCollectionState extends State<DetailCollection> {
           },
         ),
       ),
-      body: collectionContent(),
+      body: collectionContent(widget.collectionItem),
     );
   }
 }
 
-Widget collectionContent() {
+Widget collectionContent(Collection collectionItem) {
   return Center(
     child: BlocSelector<CollectionsBloc, CollectionsState, List<Photo>>(
         selector: (state) => state.listCollectionPhotos,
         builder: (_, listPhoto) {
-          return StaggeredGridView.countBuilder(
-            crossAxisCount: 4,
-            mainAxisSpacing: 1.5,
-            crossAxisSpacing: 1.5,
-            // controller: widget.scrollController,
-            itemCount: listPhoto.length,
-            itemBuilder: (context, index) {
-              Photo item = listPhoto[index];
-              List<Photo> listPhotoSug = listPhoto;
-              return FadeInUp(
-                delay: Duration(milliseconds: index * 50),
-                duration: Duration(milliseconds: (index * 50) + 500),
-                child: photoItem(context, item, listPhotoSug),
-              );
-            },
-            staggeredTileBuilder: (int index) =>
-                StaggeredTile.count(2, index.isEven ? 4 : 2),
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  Container(
+                    margin: const EdgeInsets.all(16),
+                    child: Text(
+                      "${collectionItem.totalPhotos} Photos • Collected by ${collectionItem.user?.name}",
+                      style: const TextStyle(
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ]),
+              ),
+              SliverStaggeredGrid.countBuilder(
+                crossAxisCount: 4,
+                mainAxisSpacing: 1.5,
+                crossAxisSpacing: 1.5,
+                // controller: widget.scrollController,
+                itemCount: listPhoto.length,
+                itemBuilder: (context, index) {
+                  Photo item = listPhoto[index];
+                  List<Photo> listPhotoSug = listPhoto;
+                  return FadeInUp(
+                    delay: Duration(milliseconds: index * 50),
+                    duration: Duration(milliseconds: (index * 50) + 500),
+                    child: photoItem(context, item, listPhotoSug),
+                  );
+                },
+                staggeredTileBuilder: (int index) =>
+                    StaggeredTile.count(2, index.isEven ? 4 : 2),
+              )
+            ],
           );
         }),
   );

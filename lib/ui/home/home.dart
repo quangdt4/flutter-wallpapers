@@ -33,7 +33,6 @@ class _HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: homeAppBar(),
         body: Center(
           child: BlocSelector<NavigationBloc, NavigationState, int>(
             selector: (state) => state.selectedItem,
@@ -60,26 +59,6 @@ class _HomeState extends State<HomePage> {
           scrollController: scrollController,
         );
     }
-  }
-
-  AppBar homeAppBar() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      title: const Text(
-        "INSPIRED",
-        style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-            letterSpacing: 1.0),
-      ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black87),
-          onPressed: () {},
-        ),
-      ],
-    );
   }
 
   Widget bottomNavBar() {
