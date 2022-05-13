@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wallpapers/data/network/response/photo_res.dart';
 
+// BOTTOM SHEET IN HOME FEED
 Widget infoBottomSheet() {
   return Container(
     alignment: Alignment.topLeft,
@@ -102,3 +104,73 @@ Widget infoBottomSheet() {
     ),
   );
 }
+
+//BOTTOM SHEET IN PHOTO DETAIL--------------------------------------
+Widget photoInfoBottomSheet(Photo photo) {
+  return Container(
+    alignment: Alignment.topLeft,
+    padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
+    height: 140,
+    color: Colors.white,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          child: Container(
+            alignment: Alignment.centerLeft,
+            height: 44,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+            ),
+            child: Row(
+              children: const [
+                Icon(Icons.phonelink_setup, size: 24),
+                SizedBox(width: 14),
+                Text(
+                  "Set as Wallpapers",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          onTap: () {
+            _setWallpapers();
+          },
+        ),
+        GestureDetector(
+          child: Container(
+            alignment: Alignment.centerLeft,
+            height: 44,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+            ),
+            child: Row(
+              children: const [
+                Icon(Icons.report_problem, size: 24),
+                SizedBox(width: 14),
+                Text(
+                  "Reports",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+          onTap: () {
+            _onReports();
+          },
+        )
+      ],
+    ),
+  );
+}
+
+void _onReports() {}
+
+void _setWallpapers() {}

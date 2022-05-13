@@ -10,13 +10,13 @@ Widget photoItem(BuildContext context, Photo item, List<Photo> listPhotoSug) {
       fit: BoxFit.cover,
     ),
     onTap: () {
-      _onItemPress(context, item, listPhotoSug);
+      _onItemPressed(context, item, listPhotoSug);
     },
     onLongPress: () {},
   );
 }
 
-void _onItemPress(
+void _onItemPressed(
     BuildContext context, Photo photo, List<Photo> listPhotoSug) async {
   await Navigator.push(
       context,

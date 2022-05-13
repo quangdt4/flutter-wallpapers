@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
-
+import 'package:flutter_wallpapers/ui/widgets/bottom_sheet.dart';
 import '../../data/network/response/photo_res.dart';
 import '../widgets/photo_item.dart';
 
@@ -20,6 +20,8 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailState extends State<DetailScreen> {
+  static final GlobalKey _globalKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -113,7 +115,7 @@ class _DetailState extends State<DetailScreen> {
                   size: 24,
                 ),
                 onPressed: () {
-                  _onSharePressed();
+                  _onSharePressed(photo);
                 },
               ),
               IconButton(
@@ -123,7 +125,9 @@ class _DetailState extends State<DetailScreen> {
                   size: 24,
                 ),
                 onPressed: () {
-                  _onMorePressed();
+                  showModalBottomSheet(context: context, builder: (context) {
+                    return photoInfoBottomSheet(photo);
+                  });
                 },
               ),
             ],
@@ -244,9 +248,19 @@ class _DetailState extends State<DetailScreen> {
 
   void _onDownloadPressed() {}
 
-  void _onSharePressed() {}
+  void _onSharePressed(Photo photo) async {
+    final box = context.findRenderObject() as RenderBox?;
+    var imagePaths = photo.links?.html;
 
-  void _onMorePressed() {
-    //show bottomSheet options: Report, Set as Wallpaper, Info
+    // if (imagePaths.isNotEmpty) {
+    //   await Share.shareFiles(imagePaths,
+    //       text: text,
+    //       subject: subject,
+    //       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    // } else {
+    //   await Share.share(text,
+    //       subject: subject,
+    //       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+    // }
   }
 }

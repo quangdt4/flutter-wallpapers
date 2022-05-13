@@ -6,7 +6,7 @@ import '../../../data/network/response/photo_res.dart';
 import '../../../states/photos/photo_bloc.dart';
 import '../../../states/photos/photo_event.dart';
 import '../../../states/photos/photo_state.dart';
-import '../../widgets/info_bottom_sheet.dart';
+import '../../widgets/bottom_sheet.dart';
 import '../../widgets/photo_item.dart';
 
 class TabFeed extends StatefulWidget {
