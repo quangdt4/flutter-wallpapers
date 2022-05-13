@@ -38,7 +38,7 @@ class _TabExploreState extends State<TabExplore> {
               padding: const EdgeInsets.only(left: 12, right: 12),
               child: Column(children: [
                 const SizedBox(height: 12),
-                searchBar(screenWidth),
+                _searchBar(screenWidth),
                 const SizedBox(height: 20),
                 const Align(
                   alignment: Alignment.topLeft,
@@ -52,14 +52,14 @@ class _TabExploreState extends State<TabExplore> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                listCollectionItem(listCollection)
+                _listCollection(listCollection)
               ]),
             );
           }),
     );
   }
 
-  Widget searchBar(double screenWidth) {
+  Widget _searchBar(double screenWidth) {
     return GestureDetector(
       child: Container(
           width: screenWidth,
@@ -96,7 +96,7 @@ class _TabExploreState extends State<TabExplore> {
     );
   }
 
-  Widget listCollectionItem(List<Collection> listCollection) {
+  Widget _listCollection(List<Collection> listCollection) {
     return Expanded(
       child: StaggeredGridView.countBuilder(
         crossAxisCount: 4,
@@ -110,14 +110,14 @@ class _TabExploreState extends State<TabExplore> {
           return FadeInUp(
             delay: Duration(milliseconds: index * 50),
             duration: Duration(milliseconds: (index * 50) + 800),
-            child: collectionItem(context, item),
+            child: _collectionItem(context, item),
           );
         },
       ),
     );
   }
 
-  Widget collectionItem(BuildContext context, Collection item) {
+  Widget _collectionItem(BuildContext context, Collection item) {
     return GestureDetector(
         child: Stack(
           fit: StackFit.expand,

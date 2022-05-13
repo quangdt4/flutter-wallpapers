@@ -7,7 +7,7 @@ import '../../data/network/response/photo_res.dart';
 import '../../routes/routes.dart';
 import '../../states/photos/photo_bloc.dart';
 import '../../states/photos/photo_state.dart';
-import '../detail/collection_detail.dart';
+import '../widgets/photo_item.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -54,12 +54,12 @@ class _SearchState extends State<SearchPage> {
                           AppNavigator.pop();
                         },
                       ),
-                      searchBar(),
+                      _searchBar(),
                       const SizedBox(width: 12),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  searchResultContent(listPhoto)
+                  _searchResultContent(listPhoto)
                 ]),
               );
             }),
@@ -67,7 +67,7 @@ class _SearchState extends State<SearchPage> {
     );
   }
 
-  Widget searchResultContent(List<Photo> listPhoto) {
+  Widget _searchResultContent(List<Photo> listPhoto) {
     return Expanded(
       child: StaggeredGridView.countBuilder(
         crossAxisCount: 4,
@@ -89,7 +89,7 @@ class _SearchState extends State<SearchPage> {
     );
   }
 
-  Widget searchBar() {
+  Widget _searchBar() {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.only(left: 10, right: 10),
@@ -108,7 +108,7 @@ class _SearchState extends State<SearchPage> {
             enableSuggestions: false,
             autocorrect: false,
             onSubmitted: (keyWord) {
-              onInputListener(keyWord);
+              photoBloc.add(GetDataFromSearch(keyWord));
             },
             style: const TextStyle(
               decoration: TextDecoration.none,
@@ -124,9 +124,5 @@ class _SearchState extends State<SearchPage> {
         ),
       ),
     );
-  }
-
-  onInputListener(String keyWord) {
-    photoBloc.add(GetDataFromSearch(keyWord));
   }
 }

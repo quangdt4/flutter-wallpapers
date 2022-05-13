@@ -5,7 +5,7 @@ import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 
 import '../../data/network/response/photo_res.dart';
-import '../home/widget/tab_feed.dart';
+import '../widgets/photo_item.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key, required this.photo, required this.listSuggest})
@@ -35,59 +35,62 @@ class _DetailState extends State<DetailScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final marginWidget = (screenWidth - screenWidth * 0.9) / 2;
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(0),
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildListDelegate([
-                    photoDetail(widget.photo, screenWidth, marginWidget),
-                    const SizedBox(height: 100),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: const Text(
-                        "More photos",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+        backgroundColor: Colors.white,
+        body: _sliverContent(screenWidth, marginWidget));
+  }
+
+  Widget _sliverContent(double screenWidth, double marginWidget) {
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(0),
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  _photoDetail(widget.photo, screenWidth, marginWidget),
+                  const SizedBox(height: 100),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: const Text(
+                      "More photos",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
                       ),
                     ),
-                  ]),
-                ),
-                SliverPadding(
-                  // MORE PHOTOS LIST
-                  padding: const EdgeInsets.all(10),
-                  sliver: SliverStaggeredGrid.countBuilder(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      staggeredTileBuilder: (int index) =>
-                          StaggeredTile.count(2, index.isEven ? 4 : 2),
-                      itemBuilder: (context, index) {
-                        return FadeInUp(
-                          delay: Duration(milliseconds: index * 50),
-                          duration: Duration(milliseconds: (index * 50) + 800),
-                          child: photoItem(context, widget.listSuggest[index],
-                              widget.listSuggest),
-                        );
-                      },
-                      itemCount: 8),
-                )
-              ],
-            ),
+                  ),
+                ]),
+              ),
+              SliverPadding(
+                // MORE PHOTOS LIST
+                padding: const EdgeInsets.all(10),
+                sliver: SliverStaggeredGrid.countBuilder(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    staggeredTileBuilder: (int index) =>
+                        StaggeredTile.count(2, index.isEven ? 4 : 2),
+                    itemBuilder: (context, index) {
+                      return FadeInUp(
+                        delay: Duration(milliseconds: index * 50),
+                        duration: Duration(milliseconds: (index * 50) + 800),
+                        child: photoItem(context, widget.listSuggest[index],
+                            widget.listSuggest),
+                      );
+                    },
+                    itemCount: 8),
+              )
+            ],
           ),
-          btBack(),
-        ],
-      ),
+        ),
+        _buttonBack(),
+      ],
     );
   }
 
-  Widget photoDetail(Photo photo, double screenWidth, double marginWidget) {
+  Widget _photoDetail(Photo photo, double screenWidth, double marginWidget) {
     double ratio = screenWidth / photo.width!;
     return Stack(
       clipBehavior: Clip.none,
@@ -133,13 +136,13 @@ class _DetailState extends State<DetailScreen> {
               padding: const EdgeInsets.all(16),
               width: screenWidth * 0.9,
               color: AppColors.black95,
-              child: infoBox(photo)),
+              child: _infoBox(photo)),
         ),
       ],
     );
   }
 
-  Widget infoBox(Photo photo) {
+  Widget _infoBox(Photo photo) {
     bool _isVisibleDescription;
     if (photo.altDescription == null) {
       _isVisibleDescription = false;
@@ -216,7 +219,7 @@ class _DetailState extends State<DetailScreen> {
     );
   }
 
-  Widget btBack() {
+  Widget _buttonBack() {
     return Positioned(
       top: 40,
       left: 8,

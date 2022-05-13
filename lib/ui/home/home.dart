@@ -41,7 +41,7 @@ class _HomeState extends State<HomePage> {
             },
           ),
         ),
-        bottomNavigationBar: bottomNavBar(),
+        bottomNavigationBar: _bottomNavBar(),
         extendBody: true);
   }
 
@@ -61,7 +61,7 @@ class _HomeState extends State<HomePage> {
     }
   }
 
-  Widget bottomNavBar() {
+  Widget _bottomNavBar() {
     return BlocSelector<NavigationBloc, NavigationState, int>(
       selector: (state) => state.selectedItem,
       builder: (_, i) {

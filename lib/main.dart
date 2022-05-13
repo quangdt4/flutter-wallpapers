@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_wallpapers/data/network/repository/common_repo.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/res/constants.dart';
 import 'package:flutter_wallpapers/res/fonts.dart';
@@ -10,6 +9,8 @@ import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/states/collections/collections_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/photos/photo_bloc.dart';
+
+import 'data/network/network.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,10 +20,10 @@ Future<void> main() async {
       providers: [
         BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         BlocProvider<PhotoBloc>(
-          create: (context) => PhotoBloc(CommonDefaultRepository()),
+          create: (context) => PhotoBloc(NetworkService()),
         ),
         BlocProvider<CollectionsBloc>(
-          create: (context) => CollectionsBloc(CommonDefaultRepository()),
+          create: (context) => CollectionsBloc(NetworkService()),
         )
       ],
       child: const MyApp(),
