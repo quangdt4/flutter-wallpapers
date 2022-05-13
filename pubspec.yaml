@@ -50,7 +50,7 @@ dependencies:
 
   json_annotation: ^3.0.1
 
-  share_plus: ^0.6.5
+#  share_plus: ^0.6.5
 
 dev_dependencies:
   flutter_test:
