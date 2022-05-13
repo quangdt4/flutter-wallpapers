@@ -45,7 +45,7 @@ class _TabFeedState extends State<TabFeed> {
                   _updateData();
                 },
                 color: Colors.white,
-                backgroundColor: Colors.black26,
+                backgroundColor: Colors.black54,
                 child: StaggeredGridView.countBuilder(
                   crossAxisCount: 4,
                   mainAxisSpacing: 1.5,

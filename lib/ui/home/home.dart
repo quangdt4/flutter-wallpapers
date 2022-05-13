@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_bloc.dart';
 import 'package:flutter_wallpapers/states/navigation/nav_state.dart';
-import 'package:flutter_wallpapers/ui/home/widget/tab_collections.dart';
+import 'package:flutter_wallpapers/ui/home/widget/tab_profile.dart';
 import 'package:flutter_wallpapers/ui/home/widget/tab_explore.dart';
 import 'package:flutter_wallpapers/ui/home/widget/tab_storage.dart';
 import 'package:flutter_wallpapers/ui/widgets/navigation_bar.dart';
@@ -50,9 +50,9 @@ class _HomeState extends State<HomePage> {
       case 1:
         return const TabExplore();
       case 2:
-        return collections();
-      case 3:
         return storage();
+      case 3:
+        return const TabProfile();
       case 0:
       default:
         return TabFeed(
@@ -75,7 +75,7 @@ class _HomeState extends State<HomePage> {
             backgroundColor: Colors.white,
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.home_filled, size: 26),
+                  icon: Icon(Icons.grid_view, size: 26),
                   label: "Feed",
                   backgroundColor: Colors.white),
               // can change bottom nav with white70
@@ -84,12 +84,12 @@ class _HomeState extends State<HomePage> {
                   label: "Explore",
                   backgroundColor: Colors.white),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.storage, size: 26),
-                  label: "Collection",
-                  backgroundColor: Colors.white),
-              BottomNavigationBarItem(
                   icon: Icon(Icons.bookmark_outline_sharp, size: 26),
                   label: "Saved",
+                  backgroundColor: Colors.white),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_circle_outlined, size: 26),
+                  label: "Me",
                   backgroundColor: Colors.white),
             ],
             onTap: _onTabChanged,

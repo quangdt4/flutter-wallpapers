@@ -28,10 +28,13 @@ class _SplashState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
-              'Inspired',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
-            )
+              "INSPIRED",
+              style: TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  letterSpacing: 1.0),
+            ),
           ],
         ),
       ),

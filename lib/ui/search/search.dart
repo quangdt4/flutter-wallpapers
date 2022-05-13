@@ -58,6 +58,7 @@ class _SearchState extends State<SearchPage> {
                       const SizedBox(width: 12),
                     ],
                   ),
+                  const SizedBox(height: 8),
                   searchResultContent(listPhoto)
                 ]),
               );
