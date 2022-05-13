@@ -25,7 +25,7 @@ class _TabProfileState extends State<TabProfile> {
                   width: 50, height: 50),
               const SizedBox(height: 8),
               const Text(
-                "Coming soon ...",
+                "Coming soon",
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
