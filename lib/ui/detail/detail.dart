@@ -250,7 +250,7 @@ class _DetailState extends State<DetailScreen> {
 
   void _onSharePressed(Photo photo) async {
     final box = context.findRenderObject() as RenderBox?;
-    var imagePaths = photo.links?.html;
+    // var imagePaths = photo.links?.html;
 
     // if (imagePaths.isNotEmpty) {
     //   await Share.shareFiles(imagePaths,
