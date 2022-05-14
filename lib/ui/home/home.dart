@@ -50,7 +50,7 @@ class _HomeState extends State<HomePage> {
       case 1:
         return const TabExplore();
       case 2:
-        return storage();
+        return const TabStorage();
       case 3:
         return const TabProfile();
       case 0:

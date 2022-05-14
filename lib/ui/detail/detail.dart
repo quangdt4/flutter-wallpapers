@@ -4,7 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/ui/widgets/bottom_sheet.dart';
-import 'package:share_plus/share_plus.dart';
+// import 'package:share_plus/share_plus.dart';
 import '../../data/network/response/photo_res.dart';
 import '../widgets/photo_item.dart';
 
@@ -254,7 +254,7 @@ class _DetailState extends State<DetailScreen> {
   void _onDownloadPressed() {}
 
   void _onSharePressed(Photo photo) async {
-    var imagePaths = photo.links?.html;
-    await Share.share(imagePaths!);
+    // var imagePaths = photo.links?.html;
+    // await Share.share(imagePaths!);
   }
 }

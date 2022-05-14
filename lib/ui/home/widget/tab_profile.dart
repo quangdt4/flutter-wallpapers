@@ -22,13 +22,13 @@ class _TabProfileState extends State<TabProfile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset("assets/images/ic_construction.png",
-                  width: 50, height: 50),
+                  width: 50, height: 50, color: Colors.black54),
               const SizedBox(height: 8),
               const Text(
                 "Coming soon",
                 style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               )
