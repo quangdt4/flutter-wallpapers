@@ -53,7 +53,7 @@ class _TabFeedState extends State<TabFeed> {
       ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black87),
+          icon: const Icon(Icons.drag_handle, color: Colors.black87),
           onPressed: () {
             showModalBottomSheet(
                 context: context,
