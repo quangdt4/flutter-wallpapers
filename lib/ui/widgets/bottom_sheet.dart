@@ -110,7 +110,7 @@ Widget photoInfoBottomSheet(Photo photo) {
   return Container(
     alignment: Alignment.topLeft,
     padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-    height: 140,
+    height: 136,
     color: Colors.white,
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,

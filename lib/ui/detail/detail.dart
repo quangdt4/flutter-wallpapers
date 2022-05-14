@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/ui/widgets/bottom_sheet.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../data/network/response/photo_res.dart';
 import '../widgets/photo_item.dart';
 
@@ -20,8 +21,6 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailState extends State<DetailScreen> {
-  static final GlobalKey _globalKey = GlobalKey();
-
   @override
   void initState() {
     super.initState();
@@ -125,9 +124,11 @@ class _DetailState extends State<DetailScreen> {
                   size: 24,
                 ),
                 onPressed: () {
-                  showModalBottomSheet(context: context, builder: (context) {
-                    return photoInfoBottomSheet(photo);
-                  });
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return photoInfoBottomSheet(photo);
+                      });
                 },
               ),
             ],
@@ -244,23 +245,16 @@ class _DetailState extends State<DetailScreen> {
     );
   }
 
-  void _onSavePressed() {}
+  void _onSavePressed() {
+    // khi tap vao save, get link sau do save vao 1 list,
+    // khi vao man` storage, vao thu muc saved => Image.network
+    // link anh trong list
+  }
 
   void _onDownloadPressed() {}
 
   void _onSharePressed(Photo photo) async {
-    final box = context.findRenderObject() as RenderBox?;
-    // var imagePaths = photo.links?.html;
-
-    // if (imagePaths.isNotEmpty) {
-    //   await Share.shareFiles(imagePaths,
-    //       text: text,
-    //       subject: subject,
-    //       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
-    // } else {
-    //   await Share.share(text,
-    //       subject: subject,
-    //       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
-    // }
+    var imagePaths = photo.links?.html;
+    await Share.share(imagePaths!);
   }
 }
