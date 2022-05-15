@@ -95,7 +95,7 @@ class _TabStorageState extends State<TabStorage> {
               Image.network(
                   albums.yourAlbums.isNotEmpty
                       ? '${albums.yourAlbums.first.urls?.regular}'
-                      : "https://ariatec.com.br/wp-content/uploads/2015/01/black-white.png",
+                      : "https://i.pinimg.com/originals/ae/8a/c2/ae8ac2fa217d23aadcc913989fcc34a2.png",
                   fit: BoxFit.cover),
               Container(
                 decoration: const BoxDecoration(color: AppColors.black60),
