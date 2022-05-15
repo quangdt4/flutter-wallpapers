@@ -19,6 +19,18 @@ class PhotoState {
 
   const PhotoState.initial() : this._();
 
+  PhotoState downloadingState() {
+    return copyWith(selectedPhotoIndex: 1);
+  }
+
+  PhotoState downloadedState() {
+    return copyWith(selectedPhotoIndex: 1);
+  }
+
+  PhotoState errorDownloadingState(Exception e) {
+    return copyWith(error: e);
+  }
+
   PhotoState copyWith({
     List<Photo>? listPhoto,
     int? selectedPhotoIndex,
@@ -35,3 +47,4 @@ class PhotoState {
     );
   }
 }
+

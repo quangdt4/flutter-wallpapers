@@ -49,6 +49,14 @@ class PhotoBloc extends Bloc<PhotoEvent, PhotoState> {
           final newState = state.copyWith(isLocalSaved: false);
           emit(newState);
         }
+      } else if (event is DownloadPhoto) {
+        try {
+          final newState = state.copyWith(
+              listPhoto: await _photoRepository.downloadImage(event.photo));
+          emit(newState);
+        } on Exception catch (e) {
+          state.errorDownloadingState(e);
+        }
       }
     });
   }

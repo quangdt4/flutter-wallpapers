@@ -3,6 +3,7 @@ import 'package:flutter_wallpapers/data/network/repository/common_repo.dart';
 import 'package:flutter_wallpapers/data/network/response/collection_item_res.dart';
 import 'package:flutter_wallpapers/data/network/response/photo_res.dart';
 import 'package:flutter_wallpapers/data/network/response/search_photos_res.dart';
+import 'package:image_downloader/image_downloader.dart';
 
 class NetworkService implements CommonRepository {
   static String baseUrl = 'https://api.unsplash.com/';
@@ -76,5 +77,15 @@ class NetworkService implements CommonRepository {
       print(stacktrace);
       return [];
     }
+  }
+
+  @override
+  Future downloadImage(Photo photo) async {
+    await ImageDownloader.downloadImage(
+      photo.urls?.raw ?? "");
+    //   destination: AndroidDestinationType.custom(
+    //     directory: "inspired",
+    //   )..subDirectory("${photo.id}.jpg"),
+    // );
   }
 }

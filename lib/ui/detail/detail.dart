@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/ui/widgets/bottom_sheet.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../states/photos/photo_bloc.dart';
 import '../../states/photos/photo_event.dart';
 import '../../states/photos/photo_state.dart';
@@ -203,7 +204,7 @@ class _DetailState extends State<DetailScreen> {
                   size: 20,
                 ),
                 onPressed: () {
-                  _onDownloadPressed();
+                  _onDownloadPressed(photo);
                 },
               ),
               BlocSelector<PhotoBloc, PhotoState, bool>(
@@ -272,12 +273,33 @@ class _DetailState extends State<DetailScreen> {
 
   void _onSavePressed(Photo photo) {
     photoBloc.add(LocalSave(photo));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text("Storage updated!")));
   }
-
-  void _onDownloadPressed() {}
 
   void _onSharePressed(Photo photo) async {
     var imagePaths = photo.links?.html;
     await Share.share(imagePaths!);
+  }
+
+  void _onDownloadPressed(Photo photo) async {
+    if (await _checkPermission()) {
+      photoBloc.add(DownloadPhoto(photo));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text("Downloading...")));
+    } else {
+      await _requestPermission(Permission.storage);
+      _onDownloadPressed(photo);
+    }
+  }
+
+  Future<bool> _checkPermission() async {
+    var permission = Permission.storage.status;
+    return permission.isGranted;
+  }
+
+  _requestPermission(Permission permission) async {
+    final status = await permission.request();
+    print(status);
   }
 }

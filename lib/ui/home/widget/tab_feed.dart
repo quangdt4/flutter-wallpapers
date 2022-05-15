@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,15 +22,20 @@ class TabFeed extends StatefulWidget {
 
 class _TabFeedState extends State<TabFeed> {
   PhotoBloc get photoBloc => context.read<PhotoBloc>();
+  final _scrollThreshold = 200.0;
 
   @override
   void initState() {
-    photoBloc.add(GetData());
     super.initState();
+    scheduleMicrotask(() {
+      photoBloc.add(GetData());
+      // widget.scrollController.addListener(_onScroll);
+    });
   }
 
   @override
   void dispose() {
+    widget.scrollController.dispose();
     super.dispose();
   }
 
@@ -99,5 +106,15 @@ class _TabFeedState extends State<TabFeed> {
         });
   }
 
-  void _updateData() {}
+  void _updateData() {
+    photoBloc.add(GetData());
+  }
+
+// void _onScroll() {
+//   final maxScroll = widget.scrollController.position.maxScrollExtent;
+//   final currentScroll = widget.scrollController.position.pixels;
+//   if (maxScroll - currentScroll <= _scrollThreshold) {
+//     photoBloc.add(LoadMore());
+//   }
+// }
 }

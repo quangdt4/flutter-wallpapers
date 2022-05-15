@@ -52,6 +52,10 @@ dependencies:
 
   share_plus: ^4.0.4
 
+  image_downloader: ^0.31.0
+
+  permission_handler: ^9.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

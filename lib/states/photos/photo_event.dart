@@ -16,14 +16,17 @@ class LoadMore extends PhotoEvent {}
 
 class ResetPhotoData extends PhotoEvent {}
 
+class DownloadPhoto extends PhotoEvent {
+  final Photo photo;
+  DownloadPhoto(this.photo);
+}
+
 class LocalSave extends PhotoEvent {
   final Photo photo;
-
   LocalSave(this.photo);
 }
 
 class InitLocalSave extends PhotoEvent {
   final Photo photo;
-
   InitLocalSave(this.photo);
 }

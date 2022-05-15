@@ -10,4 +10,6 @@ abstract class CommonRepository {
 
   Future<List<Photo>> getPhotosFromSearch(
       String keyWord, int page, int perPage);
+
+  Future downloadImage(Photo photo);
 }
