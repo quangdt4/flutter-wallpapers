@@ -10,7 +10,7 @@ import '../../states/photos/photo_event.dart';
 import '../../states/photos/photo_state.dart';
 import '../widgets/photo_item.dart';
 import '../../data/network/response/photo_res.dart';
-// import 'package:share_plus/share_plus.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key, required this.photo, required this.listSuggest})
@@ -277,7 +277,7 @@ class _DetailState extends State<DetailScreen> {
   void _onDownloadPressed() {}
 
   void _onSharePressed(Photo photo) async {
-    // var imagePaths = photo.links?.html;
-    // await Share.share(imagePaths!);
+    var imagePaths = photo.links?.html;
+    await Share.share(imagePaths!);
   }
 }

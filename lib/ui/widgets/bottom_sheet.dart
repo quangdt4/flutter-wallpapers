@@ -138,7 +138,7 @@ Widget photoInfoBottomSheet(Photo photo) {
             ),
           ),
           onTap: () {
-            _setWallpapers();
+
           },
         ),
         GestureDetector(
@@ -172,9 +172,6 @@ Widget photoInfoBottomSheet(Photo photo) {
 }
 
 void _onReports() {}
-
-void _setWallpapers() {}
-
 
 //BOTTOM SHEET IN STORAGE--------------------------------------
 Widget newAlbumBottomSheet() {
