@@ -1,11 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/ui/widgets/bottom_sheet.dart';
+
 // import 'package:share_plus/share_plus.dart';
 import '../../data/network/response/photo_res.dart';
+import '../../states/photos/photo_bloc.dart';
+import '../../states/photos/photo_event.dart';
+import '../../states/photos/photo_state.dart';
 import '../widgets/photo_item.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -21,8 +26,11 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailState extends State<DetailScreen> {
+  PhotoBloc get photoBloc => context.read<PhotoBloc>();
+
   @override
   void initState() {
+    photoBloc.add(InitLocalSave(widget.photo));
     super.initState();
   }
 
@@ -189,18 +197,29 @@ class _DetailState extends State<DetailScreen> {
                 ),
                 onPressed: () {
                   _onDownloadPressed();
+                  print('${photo.isLocalSaved}');
                 },
               ),
-              IconButton(
-                icon: const Icon(
-                  Icons.bookmark_outline_sharp,
-                  color: Colors.grey,
-                  size: 20,
-                ),
-                onPressed: () {
-                  _onSavePressed();
-                },
-              ),
+              BlocSelector<PhotoBloc, PhotoState, bool>(
+                  selector: (state) => state.isLocalSaved,
+                  builder: (_, isLocalSaved) {
+                    return IconButton(
+                      icon: isLocalSaved
+                          ? const Icon(
+                              Icons.bookmark_outlined,
+                              color: Colors.amber,
+                              size: 20,
+                            )
+                          : const Icon(
+                              Icons.bookmark_outline_sharp,
+                              color: Colors.grey,
+                              size: 20,
+                            ),
+                      onPressed: () {
+                        _onSavePressed(photo);
+                      },
+                    );
+                  }),
             ],
           ),
           Visibility(
@@ -245,10 +264,11 @@ class _DetailState extends State<DetailScreen> {
     );
   }
 
-  void _onSavePressed() {
+  void _onSavePressed(Photo photo) {
     // khi tap vao save, get link sau do save vao 1 list,
     // khi vao man` storage, vao thu muc saved => Image.network
     // link anh trong list
+    photoBloc.add(LocalSave(photo));
   }
 
   void _onDownloadPressed() {}

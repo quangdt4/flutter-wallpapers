@@ -2,9 +2,7 @@ import '../network/response/photo_res.dart';
 
 List<Albums> storage = [
   Albums(0, "Add new", []),
-  Albums(1, "Downloaded", []),
-  Albums(2, "City Skylines", []),
-  Albums(3, "Chelsea", []),
+  Albums(1, "Saved", listLocalSaved),
 ];
 
 class Albums {
@@ -14,3 +12,5 @@ class Albums {
 
   Albums(this.id, this.title, this.yourAlbums);
 }
+
+List<Photo> listLocalSaved = [];

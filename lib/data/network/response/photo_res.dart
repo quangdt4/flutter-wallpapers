@@ -27,6 +27,7 @@ class Photo {
   Sponsorship? sponsorship;
   Urls? urls;
   User? user;
+  bool isLocalSaved = false;
 
   Photo(
       {this.id,
@@ -41,7 +42,8 @@ class Photo {
       this.links,
       this.sponsorship,
       this.urls,
-      this.user});
+      this.user,
+      required this.isLocalSaved});
 
   Photo.fromJson(Map<String, dynamic> json) {
     id = json['id'];

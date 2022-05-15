@@ -5,7 +5,7 @@ class PhotoState {
   final int selectedPhotoIndex;
   final int page;
   final Exception? error;
-  final bool canLoadMore;
+  final bool isLocalSaved;
 
   Photo get selectedPhoto => listPhoto[selectedPhotoIndex];
 
@@ -13,7 +13,7 @@ class PhotoState {
     this.listPhoto = const [],
     this.selectedPhotoIndex = 0,
     this.page = 1,
-    this.canLoadMore = true,
+    this.isLocalSaved = false,
     this.error,
   });
 
@@ -23,14 +23,14 @@ class PhotoState {
     List<Photo>? listPhoto,
     int? selectedPhotoIndex,
     int? page,
-    bool? canLoadMore,
+    bool? isLocalSaved,
     Exception? error,
   }) {
     return PhotoState._(
       listPhoto: listPhoto ?? this.listPhoto,
       selectedPhotoIndex: selectedPhotoIndex ?? this.selectedPhotoIndex,
       page: page ?? this.page,
-      canLoadMore: canLoadMore ?? this.canLoadMore,
+      isLocalSaved: isLocalSaved ?? this.isLocalSaved,
       error: error ?? this.error,
     );
   }
