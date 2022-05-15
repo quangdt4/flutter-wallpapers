@@ -1,10 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../data/model/storage.dart';
 import '../../../res/colors.dart';
-import '../../../states/collections/collections_bloc.dart';
+import '../../detail/local_save_detail.dart';
 import '../../widgets/bottom_sheet.dart';
 
 class TabStorage extends StatefulWidget {
@@ -15,22 +14,14 @@ class TabStorage extends StatefulWidget {
 }
 
 class _TabStorageState extends State<TabStorage> {
-  CollectionsBloc get collectionsBloc => context.read<CollectionsBloc>();
-
   @override
   void initState() {
-    // collectionsBloc.add(GetData());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      // child: BlocSelector<CollectionsBloc, CollectionsState, List<Collection>>(
-      //     selector: (state) => state.listCollection,
-      //     builder: (_, listCollection) {
-      //       return
-      //     }),
       child: Container(
         padding: const EdgeInsets.only(left: 12, right: 12),
         child: Column(children: [
@@ -88,11 +79,13 @@ class _TabStorageState extends State<TabStorage> {
             ],
           ),
           onTap: () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return newAlbumBottomSheet();
-                });
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text("Login first")));
+            // showModalBottomSheet(
+            //     context: context,
+            //     builder: (context) {
+            //       return newAlbumBottomSheet();
+            //     });
           });
     } else {
       return GestureDetector(
@@ -100,7 +93,9 @@ class _TabStorageState extends State<TabStorage> {
             fit: StackFit.expand,
             children: [
               Image.network(
-                  "https://images.unsplash.com/photo-1652457988479-ff393bc55e72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  albums.yourAlbums.isNotEmpty
+                      ? '${albums.yourAlbums.first.urls?.regular}'
+                      : "https://ariatec.com.br/wp-content/uploads/2015/01/black-white.png",
                   fit: BoxFit.cover),
               Container(
                 decoration: const BoxDecoration(color: AppColors.black60),
@@ -121,15 +116,16 @@ class _TabStorageState extends State<TabStorage> {
                   ),
                 ),
               ),
-              IconButton(
-                  padding: const EdgeInsets.all(10),
-                  alignment: Alignment.topRight,
-                  icon: const Icon(
-                    Icons.more_horiz,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {})
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    icon: const Icon(
+                      Icons.more_horiz,
+                      size: 20,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {}),
+              ),
             ],
           ),
           onTap: () {
@@ -139,9 +135,7 @@ class _TabStorageState extends State<TabStorage> {
   }
 
   void _onItemPressed(Albums albums) async {
-    // await Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => DetailCollection(collectionItem: item)));
+    await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const LocalSaveDetail()));
   }
 }

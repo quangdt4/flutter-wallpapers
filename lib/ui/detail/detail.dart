@@ -5,13 +5,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_wallpapers/res/colors.dart';
 import 'package:flutter_wallpapers/routes/routes.dart';
 import 'package:flutter_wallpapers/ui/widgets/bottom_sheet.dart';
-
-// import 'package:share_plus/share_plus.dart';
-import '../../data/network/response/photo_res.dart';
 import '../../states/photos/photo_bloc.dart';
 import '../../states/photos/photo_event.dart';
 import '../../states/photos/photo_state.dart';
 import '../widgets/photo_item.dart';
+import '../../data/network/response/photo_res.dart';
+// import 'package:share_plus/share_plus.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({Key? key, required this.photo, required this.listSuggest})
@@ -27,6 +26,14 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailState extends State<DetailScreen> {
   PhotoBloc get photoBloc => context.read<PhotoBloc>();
+
+  int limitSug() {
+    if (widget.listSuggest.length >= 8) {
+      return 8;
+    } else {
+      return widget.listSuggest.length;
+    }
+  }
 
   @override
   void initState() {
@@ -89,7 +96,7 @@ class _DetailState extends State<DetailScreen> {
                             widget.listSuggest),
                       );
                     },
-                    itemCount: 8),
+                    itemCount: limitSug()),
               )
             ],
           ),
@@ -197,7 +204,6 @@ class _DetailState extends State<DetailScreen> {
                 ),
                 onPressed: () {
                   _onDownloadPressed();
-                  print('${photo.isLocalSaved}');
                 },
               ),
               BlocSelector<PhotoBloc, PhotoState, bool>(
@@ -265,9 +271,6 @@ class _DetailState extends State<DetailScreen> {
   }
 
   void _onSavePressed(Photo photo) {
-    // khi tap vao save, get link sau do save vao 1 list,
-    // khi vao man` storage, vao thu muc saved => Image.network
-    // link anh trong list
     photoBloc.add(LocalSave(photo));
   }
 
