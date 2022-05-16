@@ -1,6 +1,7 @@
 # Inspired - Photo Picker for Android & IOS
 
-Inspired is an sample Flutter app that allows you to quickly discover the Unsplash library and download for free high-quality photos
+- Inspired is an sample Flutter app that allows you to quickly discover the Unsplash library and download for free high-quality photos
+
 
 ## Preview
 
@@ -13,4 +14,4 @@ Inspired is an sample Flutter app that allows you to quickly discover the Unspla
 
 ## Source
 
-- [Pokedex App design](https://unsplash.com)
+- [Unsplash](https://unsplash.com)
